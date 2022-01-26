@@ -13,6 +13,11 @@ export class AppleWatchConnectivityWeb extends WebPlugin implements AppleWatchCo
     console.log('ECHO', options);
     return options;
   }
+
+  async sendMessage(options: { messageId: string; message: [] }): Promise<void> {
+    console.log(options);
+    throw new Error("Method not implemented.");
+  }
 }
 
 const AppleWatchConnectivity = new AppleWatchConnectivityWeb();
