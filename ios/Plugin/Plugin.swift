@@ -29,14 +29,20 @@ public class AppleWatchConnectivity: CAPPlugin {
 
     @objc func sendMessage(_ call: CAPPluginCall) {
         let messageId = call.getString("messageId") ?? ""
-        let message = call.getArray("message", Any.self)
-        if let validSession = self.session, validSession.isReachable {
-            validSession.sendMessage(
-                [
-                    "messageId": messageId,
-                    "message": message
-                ], replyHandler: nil
-            )
+        let message = call.getArray("message", NSDictionary.self)
+        if let validSession = self.session {
+            do {
+                var payload = [] as [String]
+                for m in message ?? [] {
+                    let jsonData = try JSONSerialization.data(withJSONObject: m)
+                    payload.append(String(data: jsonData, encoding: .utf8)!)
+                }
+                try validSession.updateApplicationContext([
+                    "message": payload
+                ])
+            } catch {
+                print(error)
+            }
             call.resolve()
         } else {
             call.reject("No reachable session")
