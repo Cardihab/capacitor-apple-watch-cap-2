@@ -11,8 +11,8 @@ public class AppleWatchConnectivity: CAPPlugin {
 
     var session: WCSession?
 
-    public override init() {
-        super.init()
+    @objc override init!(bridge: CAPBridge!, pluginId: String!, pluginName: String!) {
+        super.init(bridge: bridge, pluginId: pluginId, pluginName: pluginName)
         if WCSession.isSupported() {
             self.session = WCSession.default
             self.session?.delegate = self
