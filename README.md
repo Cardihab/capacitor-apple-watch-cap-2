@@ -1,11 +1,11 @@
-# capacitor-apple-watch-cap2
+# capacitor-apple-watch-cap-2
 
 Apple watch connectivity capacitor v2 plugin
 
 ## Install
 
 ```bash
-npm install capacitor-apple-watch-cap2
+npm install capacitor-apple-watch-cap-2
 npx cap sync
 ```
 
