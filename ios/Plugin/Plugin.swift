@@ -1,7 +1,6 @@
 import Foundation
 import Capacitor
 import WatchConnectivity
-
 /**
  * Please read the Capacitor iOS Plugin Development Guide
  * here: https://capacitorjs.com/docs/plugins/ios
@@ -52,6 +51,12 @@ public class AppleWatchConnectivity: CAPPlugin {
 
 extension AppleWatchConnectivity: WCSessionDelegate {
     public func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    }
+
+    public func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        DispatchQueue.main.async{
+            self.notifyListeners("taskSelect", data: ["taskId": applicationContext["taskId"]], retainUntilConsumed: true)
+        }
     }
 
     public func sessionDidBecomeInactive(_ session: WCSession) {
